@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Blank Cordova Mobile App Template</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+        <link href="https://fonts.googleapis.com/css?family=Pacifico|Roboto" rel="stylesheet"> 
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+        <link href="http://10.0.4.13:81/CSS/storeProject.css" rel="stylesheet" type="text/css"/>
+        <script>
+            function onloaddisplay()
+            {
+                basketTable();
+            }
+            //var basketItems = [];
+            //basketItems.length;
+
+
+            function basketTable()
+            {
+                $.ajax({
+                    url: 'http://10.0.4.13:81/storeAjax.php',
+                    cache: false,
+                    async: true,
+                    type: 'post',
+                    data:
+                            {
+                                'request': 'getProduct'
+                            },
+                    dataType: 'json',
+                    success: function (data)
+                    {
+                        var products = data.productData;
+                        var tableData = "";
+                        for (var i = 0; i < products.length; i++)
+                        {
+
+                            var localStorageId = localStorage.getItem("product" + products[i].productId);
+
+
+                            if (localStorageId === products[i].productId) {
+                                var productName = products[i].productName;
+                                //var productDescription = products[i].productDescription;
+                                var price = products[i].price;
+                                var productImage = products[i].image;
+                                //var productId = products[i].productId;
+
+                                tableData += "<tr id=trCss>";
+                                tableData += "<td id=basketCss><img style='width:90px;height:140px;'src='http://10.0.4.13:81/images/" + productImage + "'></td>";
+                                tableData += "<td id=basketCss>" + productName + "</td>";
+                                tableData += "<td id=basketCss>&pound;" + price + "</td>";
+                                tableData += "</tr>";
+
+                            }
+                            $('#tableBody').html(tableData);
+                        }
+                    }
+
+                });
+            }
+
+        </script>
+        <style>
+#basketCountId
+            {
+                color:white;
+                width:15px;
+                height:15px;
+                border-radius:100%;
+                background-color:crimson;
+                text-align: center;
+            }
+        </style>
+        <link rel="stylesheet" href="css/storeProject.css">
+    </head>
+    <body onload="onloaddisplay()" id='bodyId'>
+        <div id='basketBar'>
+
+            <div id='headerTitle'> MoviePlex</div>
+            <a href= 'index.html'>
+                <img id='backArrowImgId' src="backArrowfix.png" alt="back">
+            </a>
+            <a href='shoppingBasket.html'><img id='basketImgId' src='cart.png' alt='basket'></a>
+
+        </div>
+        <div>
+            Your Basket:
+        </div>
+        <div id='shopTab'>
+            <table >
+                <tHead>
+
+                </tHead>
+                <tbody id='tableBody'>
+
+                </tbody>
+
+            </table>
+        </div>
+    </body>
+</html>

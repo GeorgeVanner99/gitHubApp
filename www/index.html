@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+
+        <title>Blank Cordova Mobile App Template</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+        <link href="https://fonts.googleapis.com/css?family=Pacifico|Roboto" rel="stylesheet"> 
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+        <link href="http://10.0.4.13:81/CSS/storeProject.css" rel="stylesheet" type="text/css"/>
+        <script>
+            function onloaddisplay()
+            {
+
+                productInfoTable();
+
+            }
+            function productInfoTable()
+            {
+                
+
+                $.ajax({
+                    url: 'http://10.0.4.13:81/storeAjax.php',
+                    cache: false,
+                    async: true,
+                    type: 'post',
+                    data:
+                            {
+                                'request': 'getProduct'
+                            },
+                    dataType: 'json',
+                    success: function (data)
+                    {
+                        var products = data.productData;
+                        $('#tableBody').html("");
+                        for (var i = 0; i < products.length; i++)
+                        {
+                            
+                            var productName = products[i].productName;
+                            //var productDescription = products[i].productDescription;
+                            //var price = products[i].price;
+                            //var stock = products[i].stock;
+                            //var productImage = products[i].image;
+                            var productId = products[i].productId;
+
+                            var tableData = "";
+                            tableData += "<tr class='button' onclick= 'redirectToProduct(" + productId + ")'>";
+                            /*tableData += "<td id=tdcss><img src='/images/" + productImage + "'></td>";*/
+                            tableData += "<td>" + productName + "</td>";
+                            /*tableData += "<td id=tdcss>" + productDescription + "</td>";
+                             tableData += "<td id=tdcss>&pound;" + price + "</td>";
+                             tableData += "<td id=tdcss>" + stock + "</td>";*/
+
+                            tableData += "</tr>";
+                            $('#tableBody').append(tableData);
+                        }
+                    }
+
+                });
+            }
+
+            function redirectToProduct(productId)
+            {
+                sessionStorage.setItem('productId', productId);
+                window.location = "productPage.html";
+            }
+            function basketCounter()
+            {
+                document.getElementById('basketCountId').value = ++i;
+            }
+        </script>
+        <style>
+            #basketCountId
+            {
+                color:white;
+                width:10px;
+                height:10px;
+                border-radius:100%;
+                background-color:crimson;
+                text-align: center;
+            }
+
+        </style>
+        <link rel="stylesheet" href="css/storeProject.css">
+    </head>
+
+
+    <body onload="onloaddisplay()" style="margin: 0px;" id='bodyId'>
+        <div id='basketBar'>
+            <div id='headerTitle'>MoviePlexxxxxxxxxx</div> <a href='shoppingBasket.html'><img id='basketImgId' src='cart.png' alt='basket'></a>
+            <!--<div id="basketCountArea">
+                Basket:<input type="button" name="basketCount" value="" id="basketCountId" onclick="onClickDisplay()"> 
+            </div>-->
+        </div >
+        <div id='Background'>
+            <table id="productinfTab">
+                <thead>
+
+
+                </thead>
+                <tbody id="tableBody">
+
+                </tbody>
+            </table>
+        </div>
+    </body>
+
+
+</html>

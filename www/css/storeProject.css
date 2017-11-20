@@ -1,0 +1,83 @@
+@font-face
+            {
+                src:url(/fonts/Oswald-Regular.ttf);
+                font-family:Oswald;
+            }            
+            html {
+                font-family: Oswald;
+                overflow: auto;
+            }
+            #productInfTab  
+            {
+                top:12%;
+                left:10%;
+                position:absolute;
+                width:80%;
+                padding:0;
+            }
+            #titleBar
+            {
+                text-decoration:underline solid black;
+                text-align:center;
+                width:13.3%;
+            }
+            #menuBar
+            {
+                top:0;
+                text-align:center;
+                position:fixed;
+                width:100%;
+                height:5%;
+                border:threedface solid 1px;
+                background-color: threedface;
+                z-index:1;
+            }
+            #tdcss
+            {
+                border:solid grey 2px;
+                text-align: center;
+                background-color:whitesmoke;
+                
+                width:13.3%;
+            }            
+            tr
+            {
+                position:relative;
+                width:13.3%;
+                height: 10px;
+
+            }
+            td
+            {
+                text-align:left;
+                width:35%;
+            }
+            #columnTitles
+            {
+                text-decoration:underline solid black;  
+                background-color: threedface;
+                border:solid grey 2px;
+                text-align: center;
+                width:13.3%;
+            }
+            #addToBask
+            {
+                border-radius: 20px;
+                background-color:threedface;
+            }
+            #basketCountId
+            {
+                color:white;
+                width:40px;
+                height:40px;
+                border-radius:100%;
+                background-color:crimson;
+                text-align: center;
+            }
+            #basketCountArea
+            {
+                position:fixed;
+                right:5%;
+                top:2%;
+                z-index: 2;
+            }

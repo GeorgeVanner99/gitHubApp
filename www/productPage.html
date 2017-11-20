@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Blank Cordova Mobile App Template</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+        <link href="https://fonts.googleapis.com/css?family=Pacifico|Roboto" rel="stylesheet"> 
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+        <link href="http://10.0.4.13:81/CSS/storeProject.css" rel="stylesheet" type="text/css"/>
+        <style>
+            #backArrowImgId
+            {
+                width:7%;
+                height:7%;
+                left:5%;
+                top:0%;
+                position:fixed;
+                z-index: 1;
+            }
+            a:active{
+                background-color: #565857;
+            }
+            #basketCountId
+            {
+                color:white;
+                width:15px;
+                height:15px;
+                border-radius:100%;
+                background-color:crimson;
+                text-align: center;
+            }
+        </style>
+        <script>
+            var productId = sessionStorage.getItem('productId');
+            var basketItems = [];
+            $.ajax({
+                url: 'http://10.0.4.13:81/storeAjax.php',
+                cache: false,
+                async: true,
+                type: 'post',
+                data:
+                        {
+                            'request': 'getSpecificProduct',
+                            'productId': productId
+                        },
+                dataType: 'json',
+                success: function (data)
+                {
+                    var products = data.productData;
+                    $('#tableBody').html("");
+                    var productName = products[0].productName;
+                    var productDescription = products[0].productDescription;
+                    var price = products[0].price;
+                    var stock = products[0].stock;
+                    var productImage = products[0].image;
+                    var productId = products[0].productId;
+                    var tableData = "";
+                    tableData += "<tr (" + productId + ")'>";
+                    tableData += "<td id=tdcss><img src='http://10.0.4.13:81/images/" + productImage + "'></td>";
+                    tableData += "</tr" + productId + ")'>";
+                    tableData += "<tr>";
+                    tableData += "<td id=tdcss>" + productName + "</td>";
+                    tableData += "</tr>";
+                    tableData += "<tr>";
+                    tableData += "<td id=tdcss>" + productDescription + "</td>";
+                    tableData += "</tr>";
+                    tableData += "<tr>";
+                    tableData += "<td id=tdcss>&pound;" + price + "</td>";
+                    tableData += "</tr>";
+                    tableData += "<tr id='tdcss' class='button' onclick='addItem(" + productId + ")'>";
+                    tableData += "<td id=tdcss>Add to Basket</td>";
+                    tableData += "</tr>";
+                    tableData += "<tr>";
+                    if (stock < 1)
+                    {
+                        tableData += "<td id=tdcss>Out Of Stock</td>";
+                    } else
+                    {
+                        tableData += "<td id=tdcss>In Stock</td>";
+                    }
+                    tableData += "</tr ()'>";
+
+                    $('#tableBody').append(tableData);
+                }});
+
+
+            function addItem(productId)
+            {
+                var product = localStorage.getItem("product" + productId, productId);
+                if (product === null) {
+                    //alert('yes');
+                    localStorage.setItem("product" + productId, productId);
+                } else {
+                    return;
+                }
+                //localStorage.setItem("product" + productId, productId);
+                //window.location = "shoppingBasket.html";
+                //basketItems.push(productId);
+                //alert(basketItems);
+            }
+            
+        </script>
+
+
+    </head>
+
+
+    <body id='bodyId'>
+
+        <div id='basketBar'>
+            <a onclick="window.location = 'index.html'"><img id='backArrowImgId' src="backArrowfix.png" alt="back"></a>
+            <div id='headerTitle'> MoviePlex</div>
+            <a href='shoppingBasket.html'><img id='basketImgId' src='cart.png' alt='basket'></a>
+            
+        </div>
+        <div id="Background">
+
+            <table id="productinfTab">
+                <thead>
+
+                    <!--<tr ><td id="columnTitles"> </td></tr><tr><td id="columnTitles"></td></tr><tr><td id="columnTitles">Description</td></tr><tr><td id="columnTitles">Price</td></tr><tr><td id="columnTitles">Stock</td></tr><tr><td id="columnTitles"> </td></tr>-->
+                </thead>
+                <tbody id="tableBody">
+
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

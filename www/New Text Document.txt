@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Blank Cordova Mobile App Template</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+        <link href="https://fonts.googleapis.com/css?family=Pacifico|Roboto" rel="stylesheet"> 
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+        <link href="/CSS/storeProject.css" rel="stylesheet" type="text/css"/>
+        <script>
+            var productId = sessionStorage.getItem('productId');
+
+            $.ajax({
+                url: 'http://10.0.4.13:81/storeAjax.php',
+                cache: false,
+                async: true,
+                type: 'post',
+                data:
+                        {
+                            'request': 'getSpecificProduct',
+                            'productId': productId
+                        },
+                dataType: 'json',
+                success: function (data)
+                {
+                    var products = data.productData;
+                    $('#tableBody').html("");
+
+
+                    var productName = products[0].productName;
+                    var productDescription = products[0].productDescription;
+                    var price = products[0].price;
+                    var stock = products[0].stock;
+                    var productImage = products[0].image;
+                    var productId = products[0].productId;
+
+                    var tableData = "";
+                    tableData += "<tr (" + productId + ")'>";
+                    tableData += "<td id=tdcss><img src='../../images" + productImage + "'></td>";
+                    tableData += "</tr (" + productId + ")'>";
+                    tableData += "<tr ()'>";
+                    tableData += "<td id=tdcss>" + productName + "</td>";
+                    tableData += "</tr ()'>";
+                    tableData += "<tr ()'>";
+                    tableData += "<td id=tdcss>" + productDescription + "</td>";
+                    tableData += "</tr ()'>";
+                    tableData += "<tr ()'>";
+                    tableData += "<td id=tdcss>&pound;" + price + "</td>";
+                    tableData += "</tr ()'>";
+                    tableData += "<tr ()'>";
+                    tableData += "<td id=tdcss>Stock: " + stock + "</td>";
+                    tableData += "</tr>";
+                    $('#tableBody').append(tableData);
+                }});
+        </script>
+        <style>
+            #titleBar
+            {
+                text-decoration:underline solid black;
+                text-align:center;
+                width:13.3%;
+                border: transparent;
+            }
+            #tdcss
+            {
+                border:solid grey 2px;
+                text-align: center;
+                background-color:whitesmoke;
+                padding:20px;
+                width:13.3%;
+                
+            }            
+        </style>
+        <link rel="stylesheet" href="/wwwroot/CSS/app.css">
+    </head>
+
+
+    <body>
+        <button id="backPage" value="Back" onclick="window.location = 'index.html'">Back</button>
+        <table id="productinfTab">
+            <thead>
+
+                <!--<tr ><td id="columnTitles"> </td></tr><tr><td id="columnTitles"></td></tr><tr><td id="columnTitles">Description</td></tr><tr><td id="columnTitles">Price</td></tr><tr><td id="columnTitles">Stock</td></tr><tr><td id="columnTitles"> </td></tr>-->
+            </thead>
+            <tbody id="tableBody">
+
+            </tbody>
+        </table>
+
+    </body>
+</html>
